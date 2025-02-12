@@ -1,17 +1,23 @@
 package app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Livro;
+import app.repository.LivroRepository;
 
 @Service
 public class LivroService {
 	
+	@Autowired
+	private LivroRepository livroRepository;
+	
 	public String save(Livro livro) {
-		//COMUNICAÇÃO BD
+
+		this.livroRepository.save(livro);
+		
 		return "Livro salvo com sucesso!";
 	}
 	
@@ -21,11 +27,8 @@ public class LivroService {
 	}
 	
 	public Livro findById(long id) {
-		//BD
 		
-		Livro livro = new Livro();
-		livro.setTitulo("abc");
-		
+		Livro livro = this.livroRepository.findById(id).get();
 		return livro;
 	}
 	
@@ -35,16 +38,8 @@ public class LivroService {
 	}
 	
 	public List<Livro> findAll(){
-		List<Livro> lista = new ArrayList<>();
-		
-		Livro livro1 = new Livro();
-		livro1.setTitulo("abc");
-		
-		Livro livro2 = new Livro();
-		livro2.setTitulo("bcd");
-		
-		lista.add(livro1);
-		lista.add(livro2);
+
+		List<Livro> lista = this.livroRepository.findAll();
 		
 		return lista;
 	}
